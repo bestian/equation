@@ -44,9 +44,10 @@ rm1 (a:as) (x:xs) os | a == x    = rm1 as xs os
                      | otherwise = os
 
 
-parseEq a@(x:xs) | a =~ "^[0-9]*x ?[+-] ?[0-9]+ ?= ?0$" :: Bool  = L (r list 0) (r list 1)
-                 | a =~ "^[0-9]*x.+2 ?[+-] ?[0-9]*x ?[+-] ?[0-9]+ ?= ?0$" :: Bool  = Q (r list 0) (r list 2) (r list 3)
-                 | a =~ "^[0-9]*x.+2 ?[+-] ?[0-9]+ ?= ?0$" :: Bool  = Q (r list 0) 0 (r list 2)
+parseEq a@(x:xs) | a =~ "^[0-9]*x ?[+-] ?[0-9]+ ?= ?[0-9]+$" :: Bool  = L (r list 0) ((r list 1) - (r list 2))
+                 | a =~ "^[0-9]*x.+2 ?[+-] ?[0-9]*x ?[+-] ?[0-9]+ ?= ?[0-9]+$" :: Bool  = Q (r list 0) (r list 2) ((r list 3) - (r list 4))
+                 | a =~ "^[0-9]*x.+2 ?= ?[0-9]+$" :: Bool  = Q (r list 0) 0 (-(r list 2))
+                 | a =~ "^[0-9]*x.+2 ?[+-] ?[0-9]+ ?= ?[0-9]+$" :: Bool  = Q (r list 0) 0 ((r list 2) - (r list 3))
                  | otherwise       = L 1 0
                  where list = getAllTextMatches (a1 =~ "-? ?[0-9]+" :: AllTextMatches [] String)
                        a1 | a =~ "^x" :: Bool = "1" ++ a
