@@ -33,7 +33,9 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver.
 # These entries can reference officially published versions as well as
 # forks / in-progress versions pinned to a git hash. For example:
-#
+
+extra-deps:
+   - regex-posix-clib-2.7
 # extra-deps:
 # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git
@@ -42,6 +44,9 @@ packages:
 # extra-deps: []
 
 # Override default flag values for local packages and extra-deps
+flags:
+   regex-posix:
+      _regex-posix-clib: true
 # flags: {}
 
 # Extra package databases containing global packages
