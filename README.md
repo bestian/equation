@@ -1,2 +1,7 @@
 # equation
- equation solver
+an equation solver
+
+## Installation
+
+* clone this repo
+* ``` stack install ``
